@@ -13,5 +13,5 @@ if __name__ == '__main__':
     sch = SchnorrSiganture(p, q, g)
     msg = '1101'
     sig = sch.generate_sig(msg)
-    print(SchnorrSiganture.verify_sig(msg, sig, sch.get_pub_key(), g, p))
-    print(SchnorrSiganture.verify_sig('1001', sig, sch.get_pub_key(), g, p))
+    print(SchnorrSiganture.verify_sig(msg, sig, sch.get_pub_key(), g, p, q))
+    print(SchnorrSiganture.verify_sig('1001', sig, sch.get_pub_key(), g, p, q))

@@ -15,19 +15,19 @@ class SchnorrSiganture:
     def generate_sig(self, bin_message):
         r = randint(2, self.q-1)
         R = pow(self.g, r, self.p)
-        e = SchnorrSiganture.find_e(R, self.pub_key, bin_message)
+        e = SchnorrSiganture.find_e(R, self.pub_key, bin_message, self.q)
         s = (r + e*self.x) % self.q
 
         return R, s
 
 
     @staticmethod
-    def find_e(R, pub_key, bin_msg):
+    def find_e(R, pub_key, bin_msg, q):
         full_message = bin(R)[2:] + bin(pub_key)[2:] + bin_msg
-        return int.from_bytes(hashlib.sha256(full_message.encode()).digest())
+        return int.from_bytes(hashlib.sha256(full_message.encode()).digest()) % q
 
     @staticmethod
-    def verify_sig(bin_msg, sig, pub_key, g, p):
+    def verify_sig(bin_msg, sig, pub_key, g, p, q):
         R, s = sig
-        e = SchnorrSiganture.find_e(R, pub_key, bin_msg)
-        return R * pow(pub_key, e, p) == pow(g, s, p)
+        e = SchnorrSiganture.find_e(R, pub_key, bin_msg, q)
+        return (R * pow(pub_key, e, p)) % p == pow(g, s, p)
