@@ -1,11 +1,10 @@
 from hash import *
 
 
-def prng(seed: str, count: int) -> list:
+def prng(seed: str, count: int, base10 = False) -> list:
     """Генерирует count псевдослучайных чисел на основе seed."""
     b_seed = seed.encode('utf-8')[:64]
-    if len(b_seed) < 64:
-        b_seed += b'\x00' * (64 - len(b_seed))  # Дополнение нулями
+    b_seed += b'\x00' * (64 - len(b_seed))  # Дополнение нулями
     hex_seed = b_seed.hex()
 
     # Нулевой цикл: h0 = H(seed)
@@ -17,7 +16,10 @@ def prng(seed: str, count: int) -> list:
         i_hex = format(i, '064x')
         input_block = h0 + i_hex
         h_i = stribog_both(input_block)
+        if base10:
+            h_i = int(h_i, base=16)
         results.append(h_i)
+
     return results
 
 

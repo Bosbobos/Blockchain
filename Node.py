@@ -1,4 +1,4 @@
-import hashlib
+import hash
 
 class Node:
     def __init__(self, left=None, right=None, value=None, node_hash=None):
@@ -29,4 +29,4 @@ class Node:
     def find_hash(self):
         if isinstance(self.value, str):
             value = self.value.encode()
-        self.hash = hashlib.sha256(value).hexdigest()
+        self.hash = hash.stribog_both(value.hex())

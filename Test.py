@@ -10,7 +10,8 @@ if __name__ == '__main__':
     print(mt)
 
     p, q, g = 23, 11, 2
-    sch = SchnorrSiganture(p, q, g)
+    seed = 'aboba'
+    sch = SchnorrSiganture(p, q, g, seed)
     msg = '1101'
     sig = sch.generate_sig(msg)
     print(SchnorrSiganture.verify_sig(msg, sig, sch.get_pub_key(), g, p, q))

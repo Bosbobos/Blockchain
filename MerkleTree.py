@@ -1,5 +1,6 @@
 from Node import Node
-import hashlib
+import hash
+
 
 class MerkleTree:
     def __init__(self, transactions=None):
@@ -125,9 +126,9 @@ class MerkleTree:
 
     @staticmethod
     def verify_proof(tx, proof, root_hash):
-        current_hash = hashlib.sha256(tx.encode()).hexdigest()
+        current_hash = hash.stribog_both(tx)
         for sibling_hash in proof:
             # Определяем порядок конкатенации
             combined = (current_hash + sibling_hash).encode()
-            current_hash = hashlib.sha256(combined).hexdigest()
+            current_hash = hash.stribog_both(combined.hex())
         return current_hash == root_hash
