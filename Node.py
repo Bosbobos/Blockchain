@@ -28,5 +28,5 @@ class Node:
 
     def find_hash(self):
         if isinstance(self.value, str):
-            value = self.value.encode()
-        self.hash = hash.stribog_both(value.hex())
+            self.value = self.value.encode()
+        self.hash = hash.stribog_both(self.value.hex())
